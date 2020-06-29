@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="para_text_size">20sp</dimen>
+    <dimen name="main_layout_margin">40dp</dimen>
+    <dimen name="heading_text_size">40sp</dimen>
+    <dimen name="calendar_icon_dimen">50dp</dimen>
+    <dimen name="play_or_zoom_icon_dimen">60dp</dimen>
+</resources>

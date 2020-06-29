@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/main_layout_margin"
+            android:singleLine="false"
+            android:textAllCaps="true"
+            android:textSize="@dimen/heading_text_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/calendar_button"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.65"
+            tools:text="Title..." />
+
+        <ImageView
+            android:id="@+id/calendar_button"
+            android:layout_width="@dimen/calendar_icon_dimen"
+            android:layout_height="@dimen/calendar_icon_dimen"
+            android:layout_marginEnd="@dimen/main_layout_margin"
+            android:src="@drawable/calendar"
+            app:layout_constraintBottom_toBottomOf="@id/title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/title"
+            app:layout_constraintTop_toTopOf="@id/title" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/main_layout_margin"
+            android:singleLine="false"
+            android:textAllCaps="true"
+            android:textSize="@dimen/para_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/play_or_zoom"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.65"
+            tools:text="Dummy para" />
+
+        <ImageView
+            android:id="@+id/play_or_zoom"
+            android:layout_width="@dimen/play_or_zoom_icon_dimen"
+            android:layout_height="@dimen/play_or_zoom_icon_dimen"
+            android:layout_marginEnd="@dimen/main_layout_margin"
+            app:layout_constraintBottom_toBottomOf="@id/description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/description"
+            tools:src="@drawable/ic_zoom_out_map_black_24dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
