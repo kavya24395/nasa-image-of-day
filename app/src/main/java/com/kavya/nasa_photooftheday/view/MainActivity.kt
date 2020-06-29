@@ -21,36 +21,5 @@ class MainActivity : AppCompatActivity() {
             this,
             R.layout.activity_main
         )
-
-        /*val apod: Call<ApodResponse> = NetworkUtils.getNetworkHook(ApodApi::class.java)
-            .fetchApodForCurrentDay()
-
-        apod.enqueue(object : Callback<ApodResponse> {
-            override fun onFailure(call: Call<ApodResponse>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onResponse(call: Call<ApodResponse>, response: Response<ApodResponse>) {
-                println("response is SUCCESS")
-            }
-
-        })
-
-        NetworkUtils.getNetworkHook(ApodApi::class.java)
-            .fetchApodForDate("2020-05-26")
-            .enqueue(object : Callback<ApodResponse> {
-                override fun onFailure(call: Call<ApodResponse>, t: Throwable) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onResponse(
-                    call: Call<ApodResponse>,
-                    response: Response<ApodResponse>
-                ) {
-                    println("response is SUCCESS")
-
-                }
-
-            })*/
     }
 }
