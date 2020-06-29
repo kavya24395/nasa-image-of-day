@@ -30,6 +30,7 @@
             android:layout_height="@dimen/calendar_icon_dimen"
             android:layout_marginEnd="@dimen/main_layout_margin"
             android:src="@drawable/calendar"
+            tools:src="@drawable/calendar"
             app:layout_constraintBottom_toBottomOf="@id/title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/title"
@@ -58,6 +59,7 @@
             app:layout_constraintBottom_toBottomOf="@id/description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/description"
+            android:src="@drawable/ic_zoom_out_map_black_24dp"
             tools:src="@drawable/ic_zoom_out_map_black_24dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
