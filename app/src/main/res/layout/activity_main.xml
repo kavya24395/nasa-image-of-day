@@ -24,17 +24,29 @@
             app:layout_constraintWidth_percent="0.65"
             tools:text="Title..." />
 
+        <DatePicker
+            android:id="@+id/calendar"
+            style="@style/CalendarTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:datePickerMode="calendar"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/calendar_button"
             android:layout_width="@dimen/calendar_icon_dimen"
             android:layout_height="@dimen/calendar_icon_dimen"
             android:layout_marginEnd="@dimen/main_layout_margin"
             android:src="@drawable/calendar"
-            tools:src="@drawable/calendar"
             app:layout_constraintBottom_toBottomOf="@id/title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/title"
-            app:layout_constraintTop_toTopOf="@id/title" />
+            app:layout_constraintTop_toTopOf="@id/title"
+            tools:src="@drawable/calendar" />
 
         <TextView
             android:id="@+id/description"
@@ -56,10 +68,10 @@
             android:layout_width="@dimen/play_or_zoom_icon_dimen"
             android:layout_height="@dimen/play_or_zoom_icon_dimen"
             android:layout_marginEnd="@dimen/main_layout_margin"
+            android:src="@drawable/ic_zoom_out_map_black_24dp"
             app:layout_constraintBottom_toBottomOf="@id/description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/description"
-            android:src="@drawable/ic_zoom_out_map_black_24dp"
             tools:src="@drawable/ic_zoom_out_map_black_24dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
