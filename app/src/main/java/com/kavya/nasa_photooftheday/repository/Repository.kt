@@ -1,9 +1,9 @@
 package com.kavya.nasa_photooftheday.repository
 
-import com.kavya.nasa_photooftheday.repository.network.ApodApi
+import androidx.lifecycle.LiveData
+import com.kavya.nasa_photooftheday.repository.network.ApodNetworkManager
 import com.kavya.nasa_photooftheday.repository.network.ApodResponse
-import com.kavya.nasa_photooftheday.util.NetworkUtils
-import retrofit2.Call
+import com.kavya.nasa_photooftheday.viewmodel.state.Response
 
 /**
  * Repository of APOD data
@@ -13,13 +13,11 @@ import retrofit2.Call
  */
 object Repository {
 
-    fun fetchApodForCurrentDay(): Call<ApodResponse> {
-        return NetworkUtils.getNetworkHook(ApodApi::class.java)
-            .fetchApodForCurrentDay()
+    fun fetchApodForCurrentDay(): LiveData<Response<ApodResponse>> {
+        return ApodNetworkManager.getLiveCurrentDayApod()
     }
 
-    fun fetchApodForDate(date: String): Call<ApodResponse> {
-        return NetworkUtils.getNetworkHook(ApodApi::class.java)
-            .fetchApodForDate(date)
+    fun fetchApodForDate(date: String): LiveData<Response<ApodResponse>> {
+        return ApodNetworkManager.getLiveApodForDate(date)
     }
 }
