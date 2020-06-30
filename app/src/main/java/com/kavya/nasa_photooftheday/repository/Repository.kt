@@ -13,11 +13,16 @@ import com.kavya.nasa_photooftheday.viewmodel.state.Response
  */
 object Repository {
 
+
     fun fetchApodForCurrentDay(): LiveData<Response<ApodResponse>> {
         return ApodNetworkManager.getLiveCurrentDayApod()
     }
 
     fun fetchApodForDate(date: String): LiveData<Response<ApodResponse>> {
         return ApodNetworkManager.getLiveApodForDate(date)
+    }
+
+    fun getLoadedApod(): ApodResponse? {
+        return ApodNetworkManager.cachedApod
     }
 }

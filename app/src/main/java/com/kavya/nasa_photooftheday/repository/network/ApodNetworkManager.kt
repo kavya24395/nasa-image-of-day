@@ -15,10 +15,13 @@ import retrofit2.Response
  * Created by Kavya P S on 29/06/20.
  */
 object ApodNetworkManager {
-    var mutableLiveData = MutableLiveData<dataResponse<ApodResponse>>()
+
+    var cachedApod: ApodResponse? = null
 
     fun getApodLiveData(date: String = ""): LiveData<dataResponse<ApodResponse>> {
-        lateinit var responseObject: dataResponse<ApodResponse>
+        val mutableLiveData = MutableLiveData<dataResponse<ApodResponse>>()
+        var responseObject = dataResponse<ApodResponse>(Status.LOADING)
+        mutableLiveData.value = responseObject
 
         val networkCall: Call<ApodResponse> = when (date) {
             "" -> NetworkUtils.getNetworkHook(ApodApi::class.java).fetchApodForCurrentDay()
@@ -27,11 +30,9 @@ object ApodNetworkManager {
 
         networkCall.enqueue(object : Callback<ApodResponse> {
 
-            override fun onResponse(
-                call: Call<ApodResponse>,
-                response: Response<ApodResponse>
-            ) {
+            override fun onResponse(call: Call<ApodResponse>, response: Response<ApodResponse>) {
                 if (response.isSuccessful) {
+                    cachedApod = response.body()
                     response.body()?.let {
                         responseObject = getSuccessObject(it)
                         mutableLiveData.value = responseObject
@@ -40,6 +41,7 @@ object ApodNetworkManager {
                     responseObject =
                         getErrorObject(ErrorType.GENERAL_ERROR, "Data is null")
                 } else {
+                    cachedApod = null
                     responseObject = getErrorObject(
                         ErrorType.SERVER_ERROR,
                         "Response.isSuccessful() returned false"
@@ -49,20 +51,20 @@ object ApodNetworkManager {
             }
 
             override fun onFailure(call: Call<ApodResponse>, t: Throwable) {
+                cachedApod = null
                 responseObject =
                     getErrorObject(ErrorType.SERVER_ERROR, "onFailure reason: ${t.message}")
                 mutableLiveData.value = responseObject
             }
         })
-
         return mutableLiveData
     }
 
-    fun getLiveCurrentDayApod(): LiveData<dataResponse<ApodResponse>>  {
+    fun getLiveCurrentDayApod(): LiveData<dataResponse<ApodResponse>> {
         return getApodLiveData()
     }
 
-    fun getLiveApodForDate(date: String): LiveData<dataResponse<ApodResponse>>  {
+    fun getLiveApodForDate(date: String): LiveData<dataResponse<ApodResponse>> {
         return getApodLiveData(date)
     }
 
@@ -80,4 +82,5 @@ object ApodNetworkManager {
             data = data
         )
     }
+
 }
