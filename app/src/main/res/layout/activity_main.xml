@@ -4,19 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/black"
         tools:context=".view.MainActivity">
+
+        <ImageView
+            android:id="@+id/background_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foreground="@drawable/background_gradient"
+            android:scaleType="fitCenter" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="waiting.json"
+            app:lottie_loop="true" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/error"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/black"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.50"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.50"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="error.json"
+            app:lottie_loop="true" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/content_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="title,background_image,calendar_button,play_or_zoom,description" />
 
         <TextView
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/main_layout_margin"
+            android:fadingEdge="horizontal"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_slab_bold"
+            android:scrollHorizontally="true"
             android:singleLine="false"
             android:textAllCaps="true"
+            android:textColor="@color/white"
             android:textSize="@dimen/heading_text_size"
-            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/calendar_button"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,17 +74,6 @@
             app:layout_constraintWidth_percent="0.65"
             tools:text="Title..." />
 
-        <DatePicker
-            android:id="@+id/calendar"
-            style="@style/CalendarTheme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:datePickerMode="calendar"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/calendar_button"
@@ -53,8 +92,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/main_layout_margin"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto_slab"
+            android:maxLines="10"
             android:singleLine="false"
             android:textAllCaps="true"
+            android:textColor="@color/para_white"
             android:textSize="@dimen/para_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/play_or_zoom"
@@ -68,10 +111,27 @@
             android:layout_width="@dimen/play_or_zoom_icon_dimen"
             android:layout_height="@dimen/play_or_zoom_icon_dimen"
             android:layout_marginEnd="@dimen/main_layout_margin"
+
             android:src="@drawable/ic_zoom_out_map_black_24dp"
             app:layout_constraintBottom_toBottomOf="@id/description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/description"
             tools:src="@drawable/ic_zoom_out_map_black_24dp" />
+
+        <DatePicker
+            android:id="@+id/calendar"
+            style="@style/CalendarTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:calendarTextColor="@color/colorPrimary"
+            android:datePickerMode="calendar"
+            android:elevation="5dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
