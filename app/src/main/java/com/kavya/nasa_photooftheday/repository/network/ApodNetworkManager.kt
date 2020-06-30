@@ -17,84 +17,53 @@ import retrofit2.Response
 object ApodNetworkManager {
     var mutableLiveData = MutableLiveData<dataResponse<ApodResponse>>()
 
-    fun getLiveCurrentDayApod(): LiveData<dataResponse<ApodResponse>> {
-
+    fun getApodLiveData(date: String = ""): LiveData<dataResponse<ApodResponse>> {
         lateinit var responseObject: dataResponse<ApodResponse>
 
-        NetworkUtils.getNetworkHook(ApodApi::class.java)
-            .fetchApodForCurrentDay()
-            .enqueue(object : Callback<ApodResponse> {
+        val networkCall: Call<ApodResponse> = when (date) {
+            "" -> NetworkUtils.getNetworkHook(ApodApi::class.java).fetchApodForCurrentDay()
+            else -> NetworkUtils.getNetworkHook(ApodApi::class.java).fetchApodForDate(date = date)
+        }
 
-                override fun onResponse(
-                    call: Call<ApodResponse>,
-                    response: Response<ApodResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        response.body()?.let {
-                            responseObject = getSuccessObject(it)
-                            mutableLiveData.value = responseObject
-                            return
-                        }
-                        responseObject =
-                            getErrorObject(ErrorType.GENERAL_ERROR, "Data is null")
-                    } else {
-                        responseObject = getErrorObject(
-                            ErrorType.SERVER_ERROR,
-                            "Response.isSuccessful() returned false"
-                        )
+        networkCall.enqueue(object : Callback<ApodResponse> {
+
+            override fun onResponse(
+                call: Call<ApodResponse>,
+                response: Response<ApodResponse>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        responseObject = getSuccessObject(it)
+                        mutableLiveData.value = responseObject
+                        return
                     }
-                    mutableLiveData.value = responseObject
-                }
-
-                override fun onFailure(call: Call<ApodResponse>, t: Throwable) {
                     responseObject =
-                        getErrorObject(ErrorType.SERVER_ERROR, "onFailure reason: ${t.message}")
-                    mutableLiveData.value = responseObject
+                        getErrorObject(ErrorType.GENERAL_ERROR, "Data is null")
+                } else {
+                    responseObject = getErrorObject(
+                        ErrorType.SERVER_ERROR,
+                        "Response.isSuccessful() returned false"
+                    )
                 }
-            })
+                mutableLiveData.value = responseObject
+            }
+
+            override fun onFailure(call: Call<ApodResponse>, t: Throwable) {
+                responseObject =
+                    getErrorObject(ErrorType.SERVER_ERROR, "onFailure reason: ${t.message}")
+                mutableLiveData.value = responseObject
+            }
+        })
 
         return mutableLiveData
     }
 
-    fun getLiveApodForDate(date: String): LiveData<dataResponse<ApodResponse>> {
-        lateinit var responseObject: dataResponse<ApodResponse>
-        NetworkUtils.getNetworkHook(ApodApi::class.java)
-            .fetchApodForDate(date = date)
-            .enqueue(object : Callback<ApodResponse> {
-                override fun onResponse(
-                    call: Call<ApodResponse>,
-                    response: Response<ApodResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        response.body()?.let {
-                            responseObject = getSuccessObject(it)
-                            mutableLiveData.value = responseObject
-                            return
-                        }
-                        responseObject =
-                            getErrorObject(ErrorType.GENERAL_ERROR, "Data is null")
+    fun getLiveCurrentDayApod(): LiveData<dataResponse<ApodResponse>>  {
+        return getApodLiveData()
+    }
 
-                    } else {
-                        responseObject = getErrorObject(
-                            ErrorType.SERVER_ERROR,
-                            "Response.isSuccessful() returned false"
-                        )
-                    }
-
-                    mutableLiveData.value = responseObject
-                }
-
-
-                override fun onFailure(call: Call<ApodResponse>, t: Throwable) {
-
-                    responseObject =
-                        getErrorObject(ErrorType.SERVER_ERROR, "onFailure reason: ${t.message}")
-
-                    mutableLiveData.value = responseObject
-                }
-            })
-
-        return mutableLiveData
+    fun getLiveApodForDate(date: String): LiveData<dataResponse<ApodResponse>>  {
+        return getApodLiveData(date)
     }
 
     private fun getErrorObject(type: ErrorType, message: String): dataResponse<ApodResponse> {
