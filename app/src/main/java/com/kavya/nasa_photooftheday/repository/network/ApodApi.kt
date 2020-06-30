@@ -12,14 +12,16 @@ import retrofit2.http.Query
  */
 interface ApodApi {
 
-    @GET("apod/")
-    fun fetchApodForCurrentDay(@Query("api_key") apiKey: String = "DEMO_KEY"): Call<ApodResponse>
+    @GET("apod")
+    fun fetchApodForCurrentDay(
+        @Query("api_key") apiKey: String = "gZIA8LcMFGbtvNcUTFdoB8TLNB0SmaGXqUm3Z5yp"
+    ): Call<ApodResponse>
 
 
-    @GET("apod/")
+    @GET("apod")
     fun fetchApodForDate(
-        @Query("date") date: String,
-        @Query("api_key") apiKey: String = "DEMO_KEY"
+        @Query("api_key") apiKey: String = "gZIA8LcMFGbtvNcUTFdoB8TLNB0SmaGXqUm3Z5yp",
+        @Query("date") date: String
     ): Call<ApodResponse>
 
 }
