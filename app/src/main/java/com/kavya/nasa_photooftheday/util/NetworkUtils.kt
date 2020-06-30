@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * Network Utility Manager:
- * Obtain NetworkService to make API calls using this class.
+ * Obtain NetworkHook to make API calls using this class.
  *
  * Created by Kavya P S on 29/06/20.
  */

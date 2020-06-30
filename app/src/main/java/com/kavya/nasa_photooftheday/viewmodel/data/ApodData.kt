@@ -10,7 +10,7 @@ data class ApodData(
 
     val explanation: String,
 
-    val HdUrl: String,
+    val hdUrl: String,
 
     val mediaType: String,
 

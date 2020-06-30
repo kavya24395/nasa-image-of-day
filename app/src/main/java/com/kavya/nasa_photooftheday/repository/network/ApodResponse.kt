@@ -20,7 +20,7 @@ class ApodResponse {
     val explanation: String? = null
 
     @SerializedName("hdurl")
-    val HdUrl: String? = null
+    val hdUrl: String? = null
 
     @SerializedName("media_type")
     val mediaType: String? = null
