@@ -14,10 +14,8 @@ import com.kavya.nasa_photooftheday.viewmodel.state.Response
  */
 class ApodViewModel : ViewModel() {
 
-    //    private lateinit var apodLiveData: MutableLiveData<Response<ApodResponse>>
-    private lateinit var apodLiveData: MutableLiveData<Response<ApodData>>
+    lateinit var apodLiveData: MutableLiveData<Response<ApodData>>
 
-    //    fun fetchPicOfDay(date: String = ""): LiveData<Response<ApodResponse>> {
     fun fetchPicOfDay(date: String = ""): LiveData<Response<ApodData>> {
 
         val repoLiveData = when (date) {
@@ -25,29 +23,37 @@ class ApodViewModel : ViewModel() {
             else -> Repository.fetchApodForDate(date)
         }
         return Transformations.switchMap(repoLiveData) {
-            getfilteredLiveData(it)
+            getFilteredLiveData(it)
         }
     }
 
-    private fun getfilteredLiveData(repoResponse: Response<ApodResponse>): LiveData<Response<ApodData>> {
+    private fun getFilteredLiveData(repoResponse: Response<ApodResponse>): LiveData<Response<ApodData>> {
 
         val repoData = repoResponse.data
 
         val filteredData = repoData?.let {
-            ApodData(
-                repoData.date ?: "",
-                repoData.explanation ?: "",
-                repoData.hdUrl ?: "",
-                repoData.mediaType ?: "",
-                repoData.title ?: "",
-                repoData.url ?: ""
-            )
+            viewSpecificConverter(it)
         }
-//        return Response(repoResponse.state, filteredData, repoResponse.error)
         val resp = Response(repoResponse.state, filteredData, repoResponse.error)
         apodLiveData = MutableLiveData()
         apodLiveData.value = resp
         return apodLiveData
     }
+
+    fun getCachedApod(): ApodData {
+        return viewSpecificConverter(Repository.getLoadedApod())
+    }
+
+    private fun viewSpecificConverter(repoData: ApodResponse?): ApodData {
+        return ApodData(
+            repoData?.date ?: "",
+            repoData?.explanation ?: "",
+            repoData?.hdUrl ?: "",
+            repoData?.mediaType ?: "",
+            repoData?.title ?: "",
+            repoData?.url ?: ""
+        )
+    }
+
 
 }
